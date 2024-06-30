@@ -3,11 +3,13 @@ import { Header } from './modules';
 import { pokemonService } from './api/pokemonService';
 import style from './App.module.css';
 import { PokemonType } from './types';
+import { Loader } from './components';
 
 type AppProopsType = object;
 type AppStateProps = {
   initialRender: [];
   searchRender: PokemonType;
+  showLoader: boolean;
 };
 
 class App extends Component<AppProopsType, AppStateProps> {
@@ -16,33 +18,26 @@ class App extends Component<AppProopsType, AppStateProps> {
     this.state = {
       initialRender: [],
       searchRender: {} as PokemonType,
+      showLoader: false,
     };
     this.handleSearchRequest = this.handleSearchRequest.bind(this);
   }
   async componentDidMount() {
     const searchQuery = localStorage.getItem('searchQuery');
-    if (searchQuery) {
-      const response = await pokemonService.searchPokemon(searchQuery);
-      this.setState({ searchRender: response.results });
-      this.setState({ initialRender: [] });
-    } else {
-      const response = await pokemonService.getAllPokemons();
-      this.setState({ initialRender: response.results });
-      this.setState({ searchRender: {} as PokemonType });
-    }
+    this.handleSearchRequest(searchQuery ? searchQuery : '');
   }
 
   async handleSearchRequest(query: string) {
+    this.setState({ showLoader: true });
     if (query !== '') {
       const response = await pokemonService.searchPokemon(query);
-      this.setState({ searchRender: response });
-      this.setState({ initialRender: [] });
+      this.setState({ searchRender: response, initialRender: [] });
     } else {
       const response = await pokemonService.getAllPokemons();
-      this.setState({ initialRender: response.results });
-      this.setState({ searchRender: {} as PokemonType });
+      this.setState({ initialRender: response.results, searchRender: {} as PokemonType });
     }
     localStorage.setItem('searchQuery', query);
+    this.setState({ showLoader: false });
   }
 
   render() {
@@ -65,7 +60,7 @@ class App extends Component<AppProopsType, AppStateProps> {
               ) : (
                 <div>
                   <p>{this.state?.searchRender?.name}</p>
-                  {this.state.searchRender.sprites &&
+                  {this.state.searchRender?.sprites &&
                     Object.values(this.state.searchRender?.sprites).map(
                       (el, i) => typeof el === 'string' && <img key={i} src={el} />
                     )}
@@ -73,6 +68,7 @@ class App extends Component<AppProopsType, AppStateProps> {
               )}
             </div>
           }
+          {this.state.showLoader && <Loader />}
         </main>
       </>
     );
