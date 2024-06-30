@@ -33,38 +33,46 @@ class App extends Component<AppProopsType, AppStateProps> {
   }
 
   async handleSearchRequest(query: string) {
-    const response = await pokemonService.searchPokemon(query);
-    this.setState({ searchRender: response });
-    this.setState({ initialRender: [] });
+    if (query !== '') {
+      const response = await pokemonService.searchPokemon(query);
+      this.setState({ searchRender: response });
+      this.setState({ initialRender: [] });
+    } else {
+      const response = await pokemonService.getAllPokemons();
+      this.setState({ initialRender: response.results });
+      this.setState({ searchRender: {} as PokemonType });
+    }
+    localStorage.setItem('searchQuery', query);
   }
 
   render() {
     return (
       <>
-        <Header />
+        <Header searchHandler={this.handleSearchRequest} />
         <main className={style.main}>
           {
             <div className={style.initialBlock}>
-              {this.state.initialRender.map((el: { name: string }, i: number) => (
-                <p
-                  key={i}
-                  onClick={() => this.handleSearchRequest(el.name)}
-                  className={style.nameInInitialBlock}
-                >
-                  {el.name}
-                </p>
-              ))}
+              {this.state.initialRender.length > 0 ? (
+                this.state?.initialRender?.map((el: { name: string }, i: number) => (
+                  <p
+                    key={i}
+                    onClick={() => this.handleSearchRequest(el.name)}
+                    className={style.nameInInitialBlock}
+                  >
+                    {el.name}
+                  </p>
+                ))
+              ) : (
+                <div>
+                  <p>{this.state?.searchRender?.name}</p>
+                  {this.state.searchRender.sprites &&
+                    Object.values(this.state.searchRender?.sprites).map(
+                      (el, i) => typeof el === 'string' && <img key={i} src={el} />
+                    )}
+                </div>
+              )}
             </div>
           }
-          {this.state.initialRender.length <= 0 && (
-            <div>
-              <p>{this.state.searchRender.name}</p>
-              {this.state.searchRender.sprites &&
-                Object.values(this.state.searchRender.sprites).map(
-                  (el, i) => typeof el === 'string' && <img key={i} src={el} />
-                )}
-            </div>
-          )}
         </main>
       </>
     );

@@ -8,6 +8,12 @@ type InputPropsType = {
 
 export class Input extends Component<InputPropsType> {
   render() {
-    return <input className={style.input} onChange={this.props.onChange} value={this.props.value}></input>;
+    return (
+      <input
+        className={style.input}
+        onChange={this.props.onChange}
+        value={this.props.value}
+      ></input>
+    );
   }
 }
