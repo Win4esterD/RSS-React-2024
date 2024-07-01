@@ -3,7 +3,7 @@ import style from './Button.module.css';
 
 type ButtonProps = {
   children: ReactNode;
-  onClick: (e: SyntheticEvent) => void;
+  onClick?: (e: SyntheticEvent) => void;
 };
 
 export class Button extends Component<ButtonProps> {
