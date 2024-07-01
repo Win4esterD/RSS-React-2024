@@ -1,5 +1,4 @@
 import React, { Component, ReactNode } from 'react';
-import { Button } from '../../components';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -35,16 +34,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
       );
     }
 
-    return (
-      <>
-        {this.props.children}
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-          <Button onClick={() => this.setState({ hasError: true, errorMessage: 'This is test error' })}>
-            Test Error
-          </Button>
-        </div>
-      </>
-    );
+    return this.props.children;
   }
 }
 

@@ -3,13 +3,14 @@ import { Header } from './modules';
 import { pokemonService } from './api/pokemonService';
 import style from './App.module.css';
 import { PokemonType } from './types';
-import { Loader } from './components';
+import { Loader, Button } from './components';
 
 type AppProopsType = object;
 type AppStateProps = {
   initialRender: [];
   searchRender: PokemonType;
   showLoader: boolean;
+  errorCalled: boolean;
 };
 
 class App extends Component<AppProopsType, AppStateProps> {
@@ -19,6 +20,7 @@ class App extends Component<AppProopsType, AppStateProps> {
       initialRender: [],
       searchRender: {} as PokemonType,
       showLoader: false,
+      errorCalled: false,
     };
     this.handleSearchRequest = this.handleSearchRequest.bind(this);
   }
@@ -69,6 +71,14 @@ class App extends Component<AppProopsType, AppStateProps> {
             </div>
           }
           {this.state.showLoader && <Loader />}
+          <Button
+            onClick={() => {
+              this.setState({ initialRender: [], searchRender: {} as PokemonType, errorCalled: true });
+            }}
+          >
+            Call render error
+          </Button>
+          {this.state.errorCalled && <p>{this.state.searchRender.sprites.back_default}</p>}
         </main>
       </>
     );
