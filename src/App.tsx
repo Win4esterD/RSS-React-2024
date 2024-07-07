@@ -73,7 +73,11 @@ class App extends Component<AppProopsType, AppStateProps> {
           {this.state.showLoader && <Loader />}
           <Button
             onClick={() => {
-              this.setState({ initialRender: [], searchRender: {} as PokemonType, errorCalled: true });
+              this.setState({
+                initialRender: [],
+                searchRender: {} as PokemonType,
+                errorCalled: true,
+              });
             }}
           >
             Call render error

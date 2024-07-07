@@ -3,7 +3,7 @@ import { Component } from 'react';
 export class Loader extends Component {
   render() {
     return (
-      <div style={{width: '7rem', height: '7rem'}}>
+      <div style={{ width: '7rem', height: '7rem' }}>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
           <radialGradient
             id="a8"
