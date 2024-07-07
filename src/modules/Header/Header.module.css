@@ -1,0 +1,13 @@
+.header {
+  height: 6rem;
+  background-color: rgb(40, 86, 155);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBlock {
+  display: flex;
+  gap: 0.4rem;
+}

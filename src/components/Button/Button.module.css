@@ -1,0 +1,17 @@
+.button {
+  border-radius: 1rem;
+  color: #fff;
+  min-width: 5rem;
+  max-width: 100%;
+  background-color: green;
+  height: 1.6rem;
+}
+
+.button:hover {
+  cursor: pointer;
+  background-color: rgb(255, 183, 50);
+}
+
+.button:active {
+  background-color: yellow;
+}
