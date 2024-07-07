@@ -28,8 +28,8 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   render() {
     if (this.state.hasError) {
       return (
-        <div>
-          <p>{this.state.errorMessage}</p>
+        <div style={{backgroundColor: 'red', height: '100lvh'}}>
+          <p style={{ textAlign: 'center', paddingTop: '1rem', fontWeight: 700 }}>{this.state.errorMessage}</p>
         </div>
       );
     }

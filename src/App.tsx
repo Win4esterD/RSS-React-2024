@@ -61,7 +61,7 @@ class App extends Component<AppProopsType, AppStateProps> {
                 ))
               ) : (
                 <div>
-                  <p>{this.state?.searchRender?.name}</p>
+                  <p className={style.pokemonName}>{this.state?.searchRender?.name}</p>
                   {this.state.searchRender?.sprites &&
                     Object.values(this.state.searchRender?.sprites).map(
                       (el, i) => typeof el === 'string' && <img key={i} src={el} />
